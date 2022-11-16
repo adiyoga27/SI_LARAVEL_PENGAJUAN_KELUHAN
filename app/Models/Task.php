@@ -25,7 +25,15 @@ class Task extends Model
         'start_at',
         'end_at',
     ];
-
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            $jml = $model->whereDate('created_at', date('Y-m-d'))->count();
+            $prefix = (date('Ymd') * 100000) + $jml + 1;
+            $model->task_number = $prefix;
+            $model->save();
+        });
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
