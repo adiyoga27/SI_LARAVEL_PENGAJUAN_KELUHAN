@@ -34,4 +34,9 @@ class Task extends Model
     {
         return $this->hasMany(TaskTechnician::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(TaskImage::class);
+    }
 }
