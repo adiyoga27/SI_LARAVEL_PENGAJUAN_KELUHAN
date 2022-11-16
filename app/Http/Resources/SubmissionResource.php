@@ -16,6 +16,7 @@ class SubmissionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'task_number' => $this->task_number,
             'user_id' => $this->user_id,
             'nik' => $this->nik,
             'name' => $this->name,
