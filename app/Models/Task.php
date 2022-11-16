@@ -29,7 +29,7 @@ class Task extends Model
     {
         static::created(function ($model) {
             $jml = $model->whereDate('created_at', date('Y-m-d'))->count();
-            $prefix = (date('Ymd') * 100000) + $jml + 1;
+            $prefix = (date('Ymd') * 100) + $jml + 1;
             $model->task_number = $prefix;
             $model->save();
         });
