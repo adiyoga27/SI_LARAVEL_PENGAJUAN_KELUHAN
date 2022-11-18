@@ -26,6 +26,8 @@ class SubmissionResource extends JsonResource
             'hp' => $this->hp,
             'latitude' => $this->latitude,
             'longtitude' => $this->longtitude,
+            'status' => $this->status,
+
             'images' => SubmissionImageResource::collection($this->images),
         ];
     }
