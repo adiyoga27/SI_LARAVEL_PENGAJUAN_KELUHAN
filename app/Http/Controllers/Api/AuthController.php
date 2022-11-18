@@ -86,4 +86,25 @@ class AuthController extends Controller
             'data' => new UserResource($users)
         ]);
     }
+    public function resetPassword(Request $request)
+    {
+        try {
+            //code...
+            $auth = Auth::user();
+            $user = User::where('id', $auth->id)->first();
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'Password Changed Successfully',
+                'data' => new UserResource($user)
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+            //throw $th;
+        }
+    }
 }
