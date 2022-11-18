@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -86,7 +87,7 @@ class AuthController extends Controller
             'data' => new UserResource($users)
         ]);
     }
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
         try {
             //code...

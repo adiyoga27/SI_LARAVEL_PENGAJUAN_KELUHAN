@@ -26,4 +26,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('submission/news', [SubmissionController::class, 'news']);
     Route::apiResource('submission', SubmissionController::class);
     Route::get('/auth/user', [AuthController::class, 'check']);
+    Route::get('/auth/change-password', [resetPassword::class, 'check']);
 });
