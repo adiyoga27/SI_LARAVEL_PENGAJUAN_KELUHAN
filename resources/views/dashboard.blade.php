@@ -45,6 +45,26 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="row">
+
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="avatar-xs me-3">
+                                            <span
+                                                class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                <i class="bx bx-archive-in"></i>
+                                            </span>
+                                        </div>
+                                        <h5 class="font-size-14 mb-0">Selesai</h5>
+                                    </div>
+                                    <div class="text-muted mt-4">
+                                        <h4>{{ $success }} Tasks <i class=" ms-1 text-success"></i></h4>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-body">
@@ -58,31 +78,12 @@
                                         <h5 class="font-size-14 mb-0">Sedang Diperbaiki</h5>
                                     </div>
                                     <div class="text-muted mt-4">
-                                        <h4>100 Tasks <i class=" ms-1 text-success"></i></h4>
+                                        <h4>{{ $progress }} Tasks <i class=" ms-1 text-success"></i></h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="avatar-xs me-3">
-                                            <span
-                                                class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
-                                                <i class="bx bx-archive-in"></i>
-                                            </span>
-                                        </div>
-                                        <h5 class="font-size-14 mb-0">Aktif</h5>
-                                    </div>
-                                    <div class="text-muted mt-4">
-                                        <h4>100 Tasks <i class=" ms-1 text-success"></i></h4>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="col-sm-4">
                             <div class="card">
@@ -97,7 +98,7 @@
                                         <h5 class="font-size-14 mb-0">Belum Ditanggapi</h5>
                                     </div>
                                     <div class="text-muted mt-4">
-                                        <h4>100 Tasks <i class="ms-1 text-success"></i></h4>
+                                        <h4>{{ $pending }} Tasks <i class="ms-1 text-success"></i></h4>
                                     </div>
                                 </div>
                             </div>
