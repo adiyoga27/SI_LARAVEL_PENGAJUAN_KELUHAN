@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\TaskController;
 use App\Http\Controllers\Web\TechnicianController;
@@ -16,8 +17,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/auth/verify', [AuthController::class, 'verify']);
+Route::post('/auth/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/', [DashboardController::class, 'index']);
+});
 Route::resource('technician', TechnicianController::class);
 Route::get('get-technician', [TechnicianController::class, 'getTechnician']);
 Route::prefix('tasks')->group(function () {

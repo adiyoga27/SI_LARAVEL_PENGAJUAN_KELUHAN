@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('task_number', 30);
+            $table->string('task_number', 30)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->on('users')->references('id');
             $table->string('nik');

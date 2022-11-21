@@ -22,16 +22,14 @@ class TaskController extends Controller
     }
     public function pending(Request $request)
     {
+
         if ($request->ajax()) {
             $data = Task::where('status', 'pending')->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     return view('datatables._action_dinamyc', [
                         'model'           => $data,
-                        'approve'          => $data->id,
-                        'reject'          => $data->id,
                         'view'          => url('tasks/view/' . $data->id),
-
                         'padding'         => '85px',
                     ]);
                 })
@@ -64,7 +62,7 @@ class TaskController extends Controller
     public function history(Request $request)
     {
         if ($request->ajax()) {
-            $data = Task::where('status', 'success')->orWhere('status', 'rejected')->get();
+            $data = Task::where('status', 'success')->orWhere('status', 'reject')->orWhere('status', 'progress')->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     return view('datatables._action_dinamyc', [
@@ -81,8 +79,10 @@ class TaskController extends Controller
 
     public function view($id)
     {
+        $technicians = Technician::all();
+
         $task = Task::with('technician')->find($id);
-        return view('task-view', compact('task'));
+        return view('task-view', compact(['task', 'technicians']));
     }
 
     public function approve(Request $request, $id)
