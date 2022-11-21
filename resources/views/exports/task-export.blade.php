@@ -1,19 +1,19 @@
-<table border="1">
+<table style="border: 1px" border="1px">
     <thead>
         <tr>
-            <th>No Pengajuan</th>
-            <th>NIK</th>
-            <th>Nama</th>
-            <th>HP</th>
-            <th>Desa</th>
-            <th>Latitude</th>
-            <th>Longtitude</th>
-            <th>Judul</th>
-            <th>Deskripsi</th>
-            <th>Tgl Mulai</th>
-            <th>Tgl Selesai</th>
-            <th>Teknisi</th>
-            <th>Catatan</th>
+            <th><strong>No Pengajuan</strong></th>
+            <th><strong>NIK</strong></th>
+            <th><strong>Nama</strong></th>
+            <th><strong>HP</strong></th>
+            <th><strong>Desa</strong></th>
+            <th><strong>Latitude</strong></th>
+            <th><strong>Longtitude</strong></th>
+            <th><strong>Judul</strong></th>
+            <th><strong>Deskripsi</strong></th>
+            <th><strong>Tgl Mulai</strong></th>
+            <th><strong>Tgl Selesai</strong></th>
+            <th><strong>Teknisi</strong></th>
+            <th><strong>Catatan</strong></th>
         </tr>
     </thead>
     <tbody>
