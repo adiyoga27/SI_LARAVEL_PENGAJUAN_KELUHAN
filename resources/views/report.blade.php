@@ -25,28 +25,40 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h5>Pencari Data</h5>
-                             <div class="form-group row align-items-center mb-0">
-                                <label for="inputEmail3" class="col-1 text-end control-label col-form-label">Tgl Mulai</label>
-                                <div class="col-11 border-start pb-2 pt-2">
-                                <input class="form-control" name="start_at" id="start_at" type="date">
-                                    
+                        <form action="{{ url('tasks/export') }}" method="POST">
+                            @csrf
+                            <div class="card-body">
+                                <h5>Pencari Data</h5>
+                                <div class="form-group row align-items-center mb-0">
+                                    <label for="inputEmail3" class="col-1 text-end control-label col-form-label">Tgl
+                                        Mulai</label>
+                                    <div class="col-11 border-start pb-2 pt-2">
+                                        <input class="form-control" name="start_at" id="start_at" type="date"
+                                            value="{{ old('start_at') }}">
+
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center mb-0">
+                                    <label for="inputEmail3" class="col-1 text-end control-label col-form-label">Tgl
+                                        Selesai</label>
+                                    <div class="col-11 border-start pb-2 pt-2">
+                                        <input class="form-control" name="end_at" id="end_at" type="date"
+                                            value="{{ old('end_at') }}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row align-items-center mb-0">
-                                <label for="inputEmail3" class="col-1 text-end control-label col-form-label">Tgl Selesai</label>
-                                <div class="col-11 border-start pb-2 pt-2">
-                                    <input class="form-control" name="end_at" id="end_at" type="date">
+                            <div class="card-body">
+                                <div class="form-group mb-0 text-end">
+                                    <button type="button" id="btnSearch"
+                                        class="btn btn-info rounded-pill px-4 waves-effect waves-light">
+                                        <i class="mdi mdi-magnify"></i>Pencarian</button>
+                                    <button type="submit"
+                                        class="btn btn-success rounded-pill px-4 waves-effect waves-light"> <i
+                                            class="mdi mdi-file-excel-box"></i>
+                                        Export </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group mb-0 text-end">
-                                <button type="button" id="btnSearch"
-                                    class="btn btn-info rounded-pill px-4 waves-effect waves-light">Pencarian</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -80,8 +92,6 @@
             </div> <!-- end row -->
         </div>
     </div>
-
-    
 @endsection
 @section('js')
     <!-- Required datatable js -->
@@ -136,7 +146,7 @@
                         data: 'end_at',
                         name: 'end_at'
                     },
-                    
+
                     {
                         data: 'title',
                         name: 'title'
@@ -156,12 +166,10 @@
                 ],
             });
             $(document).on("click", "#btnSearch", function(e) {
-                    e.preventDefault()
-                    table.ajax.reload();
-    
-                });
-        });
-       
+                e.preventDefault()
+                table.ajax.reload();
 
+            });
+        });
     </script>
 @endsection

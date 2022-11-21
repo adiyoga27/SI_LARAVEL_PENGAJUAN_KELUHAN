@@ -10,7 +10,7 @@
     <meta content="Themesbrand" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ url('assets') }}/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ url('assets') }}/images/logo.png">
     <!-- Sweet Alert-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -47,10 +47,10 @@
 
                         <a href="index.html" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="{{ url('assets') }}/images/logo-light.svg" alt="" height="22">
+                                <img src="{{ url('assets') }}/images/logo-light.svg" alt="" height="32">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{ url('assets') }}/images/logo-light.png" alt="" height="19">
+                                <img src="{{ url('assets') }}/images/logo-light.png" alt="" height="29">
                             </span>
                         </a>
                     </div>
@@ -79,14 +79,14 @@
                                     class="bx bx-user font-size-16 align-middle me-1"></i> <span
                                     key="t-profile">Profile</span></a>
                             <div class="dropdown-divider"></div>
-                            <form action="{{url('auth/logout')}}" method="post">
+                            <form action="{{ url('auth/logout') }}" method="post">
                                 @csrf
                                 <button type="submit" class="dropdown-item text-danger"><i
                                         class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
                                     <span key="t-logout">Logout</span></button>
 
                             </form>
-                         
+
                         </div>
                     </div>
 
@@ -148,13 +148,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{url('tasks/schedule')}}" class="waves-effect">
+                            <a href="{{ url('tasks/schedule') }}" class="waves-effect">
                                 <i class="mdi mdi-calendar-clock"></i>
                                 <span key="mdi-calendar-clock">Jadwal</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{url('tasks/report')}}" class="waves-effect">
+                            <a href="{{ url('tasks/report') }}" class="waves-effect">
                                 <i class="mdi mdi-book-open-page-variant"></i>
                                 <span key="mdi-book-open-page-variant">Laporan</span>
                             </a>

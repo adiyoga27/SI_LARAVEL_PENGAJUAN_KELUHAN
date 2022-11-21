@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/auth/verify', [AuthController::class, 'verify']);
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
-
 });
 Route::resource('technician', TechnicianController::class);
 Route::get('get-technician', [TechnicianController::class, 'getTechnician']);
@@ -30,6 +30,7 @@ Route::prefix('tasks')->group(function () {
     Route::get('/pending', [TaskController::class, 'pending'])->name('tasks.pending');
     Route::get('/progress', [TaskController::class, 'progress'])->name('tasks.progress');
     Route::get('/schedule', [TaskController::class, 'schedule'])->name('tasks.schedule');
+    Route::post('/export', [TaskController::class, 'export'])->name('tasks.export');
     Route::get('/report', [TaskController::class, 'report'])->name('tasks.report');
     Route::get('/history', [TaskController::class, 'history'])->name('tasks.history');
     Route::post('/approve/{id}', [TaskController::class, 'approve']);

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exports\TaskExport;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\TaskTechnician;
 use App\Models\Technician;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class TaskController extends Controller
@@ -65,15 +67,15 @@ class TaskController extends Controller
         if ($request->ajax()) {
             $start_at = now()->startOfMonth();
             $end_at = now()->endOfMonth();
-            if(isset($request->start_at)){
+            if (isset($request->start_at)) {
                 $start_at = $request->start_at;
             }
-            if(isset($request->end_at)){
+            if (isset($request->end_at)) {
                 $end_at = $request->end_at;
             }
             $data = Task::where('start_at', '>=', $start_at)
                 ->where('end_at', '<=', $end_at)
-                ->where(fn($q) => $q->where('status', 'progress')->orWhere('status', 'success'))
+                ->where(fn ($q) => $q->where('status', 'progress')->orWhere('status', 'success'))
                 ->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -105,10 +107,10 @@ class TaskController extends Controller
         if ($request->ajax()) {
             $start_at = now()->startOfMonth();
             $end_at = now()->endOfMonth();
-            if(isset($request->start_at)){
+            if (isset($request->start_at)) {
                 $start_at = $request->start_at;
             }
-            if(isset($request->end_at)){
+            if (isset($request->end_at)) {
                 $end_at = $request->end_at;
             }
             $data = Task::where('start_at', '>=', $start_at)
@@ -191,7 +193,6 @@ class TaskController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', "Task Gagal Approve Data");
-
         }
     }
 
@@ -212,7 +213,6 @@ class TaskController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', $th->getMessage());
-
         }
     }
 
@@ -256,5 +256,18 @@ class TaskController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', "Gagal Approve Data");
         }
+    }
+
+    public function export(Request $request)
+    {
+        $start_at = now()->startOfMonth();
+        $end_at = now()->endOfMonth();
+        if (isset($request->start_at)) {
+            $start_at = $request->start_at;
+        }
+        if (isset($request->end_at)) {
+            $end_at = $request->end_at;
+        }
+        return Excel::download(new TaskExport($start_at, $end_at), 'task-export.xlsx');
     }
 }
