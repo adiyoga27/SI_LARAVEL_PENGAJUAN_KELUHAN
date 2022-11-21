@@ -6,8 +6,10 @@
     <meta charset="utf-8" />
     <title>Sistem Pengajuan Keluhan Penerangan | Kabupaten Kelungkung</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta
+        content="Sistem Informasi Pengaduan Penerangan Jalan Umum Berbasis Mobile Pada Dinas Perhubungan Kabupaten Klungkung"
+        name="description" />
+    <meta content="codingaja.com" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ url('assets') }}/images/logo.png">
