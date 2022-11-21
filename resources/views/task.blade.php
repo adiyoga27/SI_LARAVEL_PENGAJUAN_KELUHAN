@@ -36,6 +36,8 @@
                                         <th>Nik</th>
                                         <th>Nama</th>
                                         <th>Tentang</th>
+                                        <th>Status</th>
+
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -216,6 +218,22 @@
                     {
                         data: 'title',
                         name: 'title'
+                    },
+
+                    
+                    {
+                        data: 'status',
+                        name: 'status',
+                        render: function(data, type, full, meta) {
+                        if (data=='success') {
+                            return "<span class='badge bg-success'>Selesai</span>";
+                        }else if(data=='progress'){
+                            return "<span class='badge bg-info'>Sedang Berjalan</span>";
+                        }else if(data=='pending'){
+                            return "<span class='badge bg-danger'>Dalam Antrian</span>";
+                        }
+                        return "<span class='badge bg-danger'>Tolak</span>";
+                    }
                     },
 
                     {

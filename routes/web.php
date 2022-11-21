@@ -31,6 +31,7 @@ Route::prefix('tasks')->group(function () {
     Route::get('/progress', [TaskController::class, 'progress'])->name('tasks.progress');
     Route::get('/history', [TaskController::class, 'history'])->name('tasks.history');
     Route::post('/approve/{id}', [TaskController::class, 'approve']);
+    Route::post('/finish/{id}', [TaskController::class, 'finish']);
     Route::post('/reject/{id}', [TaskController::class, 'reject']);
     Route::post('/done/{id}', [TaskController::class, 'done']);
     Route::get('/view/{id}', [TaskController::class, 'view']);

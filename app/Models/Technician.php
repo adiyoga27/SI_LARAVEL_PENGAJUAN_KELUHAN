@@ -16,4 +16,14 @@ class Technician extends Model
         'address'
     ];
 
+    public function onProgressTask()
+    {
+        return $this->hasMany(TaskTechnician::class, 'technician_id', 'id')->join('tasks', 'tasks.id', '=', 'task_technicians.task_id')->where('tasks.status', 'progress');
+    }
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
+    
+
 }

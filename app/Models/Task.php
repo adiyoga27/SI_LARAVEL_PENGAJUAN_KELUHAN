@@ -22,6 +22,7 @@ class Task extends Model
         'description',
         'status',
         'reject_note',
+        'finish_note',
         'start_at',
         'end_at',
     ];

@@ -16,4 +16,9 @@ class TaskTechnician extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public function technician()
+    {
+        return $this->belongsTo(Technician::class);
+    }
 }

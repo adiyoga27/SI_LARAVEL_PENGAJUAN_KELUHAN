@@ -46,7 +46,7 @@ class TaskController extends Controller
                 ->addColumn('action', function ($data) {
                     return view('datatables._action_dinamyc', [
                         'model'           => $data,
-                        'done'          => url('tasks/done/' . $data->id),
+                        // 'done'          => url('tasks/done/' . $data->id),
                         'view'          => url('tasks/view/' . $data->id),
 
                         'confirm_message' =>  'Pengajuan "' . $data->title . '" telah selesai ditanganin ?',
@@ -54,6 +54,7 @@ class TaskController extends Controller
                         'padding'         => '85px',
                     ]);
                 })
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -91,29 +92,47 @@ class TaskController extends Controller
             DB::beginTransaction();
             $task = Task::find($id);
             $task->status = 'progress';
-
+            $task->start_at = $request->start_date;
+            $task->end_at = $request->end_date;
             $task->save();
 
             TaskTechnician::where('task_id', $id)->get()->each->delete();
             foreach ($request->listTechnician as $key => $value) {
                 TaskTechnician::create([
                     'task_id' => $id,
-                    'technician_id' => $value['technician']
+                    'technician_id' => $value
                 ]);
             }
 
             DB::commit();
-            return response()->json([
-                'status' => true,
-                'message' => 'Task berhasil di approve',
-            ]);
+            return redirect('tasks/pending')->with('success', 'Pengajuan berhasil di approve');
+            // return redirect()->back()->with('success', 'Task berhasil di approve');
+
         } catch (\Throwable $th) {
-            //throw $th;
             DB::rollBack();
-            return response()->json([
-                'message' => false,
-                'error' => $th->getMessage()
-            ], 500);
+            return redirect()->back()->with('error', "Task Gagal Approve Data");
+
+        }
+    }
+
+    public function finish(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $task = Task::find($id);
+            $task->status = 'success';
+            $task->finish_note = $request->finish_note;
+            $task->save();
+
+
+            DB::commit();
+            return redirect('tasks/progress')->with('success', 'Pengajuan berhasil di approve');
+            // return redirect()->back()->with('success', 'Task successfully finished');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $th->getMessage());
+
         }
     }
 
@@ -150,7 +169,8 @@ class TaskController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->back()->with('success', 'Data berhasil di approve');
+            return redirect('tasks/progress')->with('success', 'Task berhasil di approve');
+            // return redirect()->back()->with('success', 'Data berhasil di approve');
         } catch (\Throwable $th) {
             throw $th;
             DB::rollBack();
