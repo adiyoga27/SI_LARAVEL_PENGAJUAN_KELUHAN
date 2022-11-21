@@ -29,6 +29,8 @@ Route::get('get-technician', [TechnicianController::class, 'getTechnician']);
 Route::prefix('tasks')->group(function () {
     Route::get('/pending', [TaskController::class, 'pending'])->name('tasks.pending');
     Route::get('/progress', [TaskController::class, 'progress'])->name('tasks.progress');
+    Route::get('/schedule', [TaskController::class, 'schedule'])->name('tasks.schedule');
+    Route::get('/report', [TaskController::class, 'report'])->name('tasks.report');
     Route::get('/history', [TaskController::class, 'history'])->name('tasks.history');
     Route::post('/approve/{id}', [TaskController::class, 'approve']);
     Route::post('/finish/{id}', [TaskController::class, 'finish']);

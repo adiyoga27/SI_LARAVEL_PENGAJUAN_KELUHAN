@@ -148,13 +148,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="chat.html" class="waves-effect">
+                            <a href="{{url('tasks/schedule')}}" class="waves-effect">
                                 <i class="mdi mdi-calendar-clock"></i>
                                 <span key="mdi-calendar-clock">Jadwal</span>
                             </a>
                         </li>
                         <li>
-                            <a href="chat.html" class="waves-effect">
+                            <a href="{{url('tasks/report')}}" class="waves-effect">
                                 <i class="mdi mdi-book-open-page-variant"></i>
                                 <span key="mdi-book-open-page-variant">Laporan</span>
                             </a>

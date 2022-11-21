@@ -60,6 +60,86 @@ class TaskController extends Controller
         }
         return view('task');
     }
+    public function schedule(Request $request)
+    {
+        if ($request->ajax()) {
+            $start_at = now()->startOfMonth();
+            $end_at = now()->endOfMonth();
+            if(isset($request->start_at)){
+                $start_at = $request->start_at;
+            }
+            if(isset($request->end_at)){
+                $end_at = $request->end_at;
+            }
+            $data = Task::where('start_at', '>=', $start_at)
+                ->where('end_at', '<=', $end_at)
+                ->where(fn($q) => $q->where('status', 'progress')->orWhere('status', 'success'))
+                ->get();
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    return view('datatables._action_dinamyc', [
+                        'model'           => $data,
+                        // 'done'          => url('tasks/done/' . $data->id),
+                        'view'          => url('tasks/view/' . $data->id),
+
+                        'confirm_message' =>  'Pengajuan "' . $data->title . '" telah selesai ditanganin ?',
+
+                        'padding'         => '85px',
+                    ]);
+                })
+                ->addColumn('technisianName', function ($data) {
+                    $technisians = $data->technician;
+                    $technisianName = '';
+                    foreach ($technisians as $technisian) {
+                        $technisianName .= $technisian->technician->name . ', ';
+                    }
+                    return $technisianName;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('schedule');
+    }
+    public function report(Request $request)
+    {
+        if ($request->ajax()) {
+            $start_at = now()->startOfMonth();
+            $end_at = now()->endOfMonth();
+            if(isset($request->start_at)){
+                $start_at = $request->start_at;
+            }
+            if(isset($request->end_at)){
+                $end_at = $request->end_at;
+            }
+            $data = Task::where('start_at', '>=', $start_at)
+                ->where('end_at', '<=', $end_at)
+                ->where('status', 'success')
+                ->get();
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    return view('datatables._action_dinamyc', [
+                        'model'           => $data,
+                        // 'done'          => url('tasks/done/' . $data->id),
+                        'view'          => url('tasks/view/' . $data->id),
+
+                        'confirm_message' =>  'Pengajuan "' . $data->title . '" telah selesai ditanganin ?',
+
+                        'padding'         => '85px',
+                    ]);
+                })
+                ->addColumn('technisianName', function ($data) {
+                    $technisians = $data->technician;
+                    $technisianName = '';
+                    foreach ($technisians as $technisian) {
+                        $technisianName .= $technisian->technician->name . ', ';
+                    }
+                    return $technisianName;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('report');
+    }
     public function history(Request $request)
     {
         if ($request->ajax()) {
