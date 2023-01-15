@@ -220,20 +220,20 @@
                         name: 'title'
                     },
 
-                    
+
                     {
                         data: 'status',
                         name: 'status',
                         render: function(data, type, full, meta) {
-                        if (data=='success') {
-                            return "<span class='badge bg-success'>Selesai</span>";
-                        }else if(data=='progress'){
-                            return "<span class='badge bg-info'>Sedang Berjalan</span>";
-                        }else if(data=='pending'){
-                            return "<span class='badge bg-danger'>Dalam Antrian</span>";
+                            if (data == 'success') {
+                                return "<span class='badge bg-success'>Selesai</span>";
+                            } else if (data == 'progress') {
+                                return "<span class='badge bg-info'>Sedang Berjalan</span>";
+                            } else if (data == 'pending') {
+                                return "<span class='badge bg-danger'>Dalam Antrian</span>";
+                            }
+                            return "<span class='badge bg-danger'>Tolak</span>";
                         }
-                        return "<span class='badge bg-danger'>Tolak</span>";
-                    }
                     },
 
                     {

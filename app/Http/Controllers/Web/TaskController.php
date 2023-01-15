@@ -97,6 +97,9 @@ class TaskController extends Controller
                     }
                     return $technisianName;
                 })
+                ->addColumn('name', function ($data) {
+                    return $data->name ?? "";
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
