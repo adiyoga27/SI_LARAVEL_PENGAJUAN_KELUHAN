@@ -135,7 +135,7 @@ class SubmissionController extends Controller
 
     public function news()
     {
-        $news = Task::where('status', '!=', 'pending')->get();
+        $news = Task::where('status', '!=', 'pending')->orderBy('id', 'DESC')->get();
         return SubmissionResource::collection($news)->additional([
             'status' => 'success',
             'message' => 'Data berhasil diambil',
