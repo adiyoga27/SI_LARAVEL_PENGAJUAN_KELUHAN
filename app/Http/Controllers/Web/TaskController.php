@@ -93,7 +93,7 @@ class TaskController extends Controller
                     $technisians = $data->technician;
                     $technisianName = '';
                     foreach ($technisians as $technisian) {
-                        $technisianName .= $technisian->technician->name . ', ';
+                        $technisianName .= $technisian->technician?->name . ', ';
                     }
                     return $technisianName;
                 })
