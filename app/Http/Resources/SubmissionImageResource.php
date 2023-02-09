@@ -16,7 +16,7 @@ class SubmissionImageResource extends JsonResource
     {
         return [
             'task_id' => $this->task_id,
-            'url' => "https://ppju.codingaja.com/storage/" . $this->url,
+            'url' => url("storage") . "/" . $this->url,
         ];
     }
 }
