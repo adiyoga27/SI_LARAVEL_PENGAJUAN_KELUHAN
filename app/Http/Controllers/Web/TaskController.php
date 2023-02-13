@@ -7,19 +7,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\TaskTechnician;
 use App\Models\Technician;
-use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Firestore;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use PhpParser\Node\Stmt\TryCatch;
 
 class TaskController extends Controller
 {
     protected $firebaseService;
 
-    public function __construct(FirebaseService $firebaseService)
+    public function __construct()
     {
-        $this->firebaseService = $firebaseService;
+        $this->firebaseService = Firebase::project('app');
     }
     
     public function show($id)
@@ -196,14 +201,22 @@ class TaskController extends Controller
                     'technician_id' => $value
                 ]);
             }
-            $this->firebaseService->setData('notifications', [
+            $message = CloudMessage::withTarget('token', $task->nik)
+                ->withNotification([
+                    'title' => 'Pengajuan anda telah di approve',
+                    'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
+                ]);
+            $messaging = app('firebase.messaging');
+            $messaging->send($message);
+            $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda telah di approve',
                 'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
                 'data' => [
                     'type' => 'task',
-                    'id' => $task->id
+                    'id' => $id
                 ]
-                ]);
+            ]);
+
             DB::commit();
             return redirect('tasks/pending')->with('success', 'Pengajuan berhasil di approve');
             // return redirect()->back()->with('success', 'Task berhasil di approve');
@@ -223,7 +236,21 @@ class TaskController extends Controller
             $task->finish_note = $request->finish_note;
             $task->save();
 
-            $this->firebaseService->notification($task->nik, 'Pengajuan anda telah di terima', 'Pengajuan anda telah diterima, silahkan cek di aplikasi');
+            $message = CloudMessage::withTarget('token', $task->nik)
+                ->withNotification([
+                    'title' => 'Pengajuan anda telah selesai',
+                    'body' => 'Pengajuan anda telah selesai, silahkan cek di aplikasi',
+                ]);
+            $messaging = app('firebase.messaging');
+            $messaging->send($message);
+            $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
+                'title' => 'Pengajuan anda telah selesai',
+                'body' => 'Pengajuan yang anda ajukan telah selesai, silahkan cek di aplikasi',
+                'data' => [
+                    'type' => 'task',
+                    'id' => $id
+                ]
+                ]);
 
             DB::commit();
             return redirect('tasks/progress')->with('success', 'Pengajuan berhasil di approve');
@@ -244,6 +271,23 @@ class TaskController extends Controller
             $task->reject_note = $request->reject_note;
             $task->save();
             DB::commit();
+            $message = CloudMessage::withTarget('token', $task->nik)
+                ->withNotification([
+                    'title' => 'Pengajuan anda telah ditolak',
+                    'body' => 'Pengajuan anda telah ditolak, silahkan cek di aplikasi',
+                ]);
+            $messaging = app('firebase.messaging');
+            $messaging->send($message);
+
+            $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
+                'title' => 'Pengajuan anda ditolak',
+                'body' => 'Pengajuan yang anda ajukan ditolak, silahkan cek di aplikasi',
+                'data' => [
+                    'type' => 'task',
+                    'id' => $id
+                ]
+                ]);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Task berhasil di reject',
@@ -271,8 +315,8 @@ class TaskController extends Controller
             return redirect('tasks/progress')->with('success', 'Task berhasil di approve');
             // return redirect()->back()->with('success', 'Data berhasil di approve');
         } catch (\Throwable $th) {
-            throw $th;
             DB::rollBack();
+            throw $th;
             return redirect()->back()->with('error', "Gagal Approve Data");
         }
     }

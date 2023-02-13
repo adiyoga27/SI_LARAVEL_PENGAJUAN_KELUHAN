@@ -17,13 +17,22 @@ class FirebaseService
 
     public function __construct()
     {
-        $serviceAccount =ServiceAccountJwtAccessCredentials::fromWellKnownFile(base_path(env('FIREBASE_JSON_FILE_PATH')));
-        // $serviceAccount = ServiceAccount::fromJsonFile(base_path(env('FIREBASE_JSON_FILE_PATH')));
-        $firebase = (new Factory)->withServiceAccount($serviceAccount)->create();
+        try {
+            $serviceAccount = ServiceAccountCredentials::fromWellKnownFile('/firebase-credentials.json');
+            dd($serviceAccount);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        
+        // $firebase = (new Factory)
+        //     ->withServiceAccount($serviceAccount)
+        //     ->create();
+        
             
 
-        $this->database = $firebase->getDatabase();
-        $this->messaging = $firebase->getMessaging();
+        // $this->database = $firebase->getDatabase();
+        // $this->messaging = $firebase->getMessaging();
     }
 
     public function getData($node)
