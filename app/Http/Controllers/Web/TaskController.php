@@ -17,6 +17,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -223,6 +224,9 @@ class TaskController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
+            Log::channel('telegram')->error($th->getMessage(), [
+                'request' => request()->path()
+            ]);
             return redirect()->back()->with('error', "Task Gagal Approve Data");
         }
     }
@@ -258,6 +262,9 @@ class TaskController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
+            Log::channel('telegram')->error($th->getMessage(), [
+                'request' => request()->path()
+            ]);
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
@@ -295,6 +302,9 @@ class TaskController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
+            Log::channel('telegram')->error($th->getMessage(), [
+                'request' => request()->path()
+            ]);
             return response()->json([
                 'message' => false,
                 'error' => $th->getMessage()
@@ -316,7 +326,9 @@ class TaskController extends Controller
             // return redirect()->back()->with('success', 'Data berhasil di approve');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            Log::channel('telegram')->error($th->getMessage(), [
+                'request' => request()->path()
+            ]);
             return redirect()->back()->with('error', "Gagal Approve Data");
         }
     }
