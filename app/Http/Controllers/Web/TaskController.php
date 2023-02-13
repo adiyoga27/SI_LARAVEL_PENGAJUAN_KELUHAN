@@ -203,13 +203,11 @@ class TaskController extends Controller
                     'technician_id' => $value
                 ]);
             }
-            $message = CloudMessage::withTarget('token', $nik)
-                ->withNotification([
-                    'title' => 'Pengajuan anda telah di approve',
-                    'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
-                ]);
-            $messaging = app('firebase.messaging');
-            $messaging->send($message);
+            $notification = Notification::create('Pengajuan anda telah di approve', 'Pengajuan anda telah di approve, silahkan cek di aplikasi');
+            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+         
+            $this->firebaseService->messaging()->send($message);
+            // $messaging = app('firebase.messaging');
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda telah di approve',
                 'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
