@@ -241,13 +241,11 @@ class TaskController extends Controller
             $task->finish_note = $request->finish_note;
             $task->save();
 
-            $message = CloudMessage::withTarget('token', $nik)
-                ->withNotification([
-                    'title' => 'Pengajuan anda telah selesai',
-                    'body' => 'Pengajuan anda telah selesai, silahkan cek di aplikasi',
-                ]);
-            $messaging = app('firebase.messaging');
-            $messaging->send($message);
+           
+            $notification = Notification::create('Pengajuan anda telah selesai', 'Pengajuan anda telah selesai, silahkan cek di aplikasi',);
+            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+            $this->firebaseService->messaging()->send($message);
+         
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda telah selesai',
                 'body' => 'Pengajuan yang anda ajukan telah selesai, silahkan cek di aplikasi',
@@ -281,14 +279,11 @@ class TaskController extends Controller
             $task->reject_note = $request->reject_note;
             $task->save();
             DB::commit();
-            $message = CloudMessage::withTarget('token', $nik)
-                ->withNotification([
-                    'title' => 'Pengajuan anda telah ditolak',
-                    'body' => 'Pengajuan anda telah ditolak, silahkan cek di aplikasi',
-                ]);
-            $messaging = app('firebase.messaging');
-            $messaging->send($message);
+           
 
+            $notification = Notification::create('Pengajuan anda telah ditolak', 'Pengajuan anda telah ditolak, silahkan cek di aplikasi',);
+            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+            $this->firebaseService->messaging()->send($message);
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda ditolak',
                 'body' => 'Pengajuan yang anda ajukan ditolak, silahkan cek di aplikasi',
