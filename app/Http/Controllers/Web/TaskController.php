@@ -190,6 +190,7 @@ class TaskController extends Controller
         try {
             DB::beginTransaction();
             $task = Task::find($id);
+            $nik = $task->nik;
             $task->status = 'progress';
             $task->start_at = $request->start_date;
             $task->end_at = $request->end_date;
@@ -202,7 +203,7 @@ class TaskController extends Controller
                     'technician_id' => $value
                 ]);
             }
-            $message = CloudMessage::withTarget('token', $task->nik)
+            $message = CloudMessage::withTarget('token', $nik)
                 ->withNotification([
                     'title' => 'Pengajuan anda telah di approve',
                     'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
@@ -236,11 +237,13 @@ class TaskController extends Controller
         try {
             DB::beginTransaction();
             $task = Task::find($id);
+            $nik = $task->nik;
+
             $task->status = 'success';
             $task->finish_note = $request->finish_note;
             $task->save();
 
-            $message = CloudMessage::withTarget('token', $task->nik)
+            $message = CloudMessage::withTarget('token', $nik)
                 ->withNotification([
                     'title' => 'Pengajuan anda telah selesai',
                     'body' => 'Pengajuan anda telah selesai, silahkan cek di aplikasi',
@@ -274,11 +277,13 @@ class TaskController extends Controller
         try {
             DB::beginTransaction();
             $task = Task::find($id);
+            $nik = $task->nik;
+
             $task->status = 'reject';
             $task->reject_note = $request->reject_note;
             $task->save();
             DB::commit();
-            $message = CloudMessage::withTarget('token', $task->nik)
+            $message = CloudMessage::withTarget('token', $nik)
                 ->withNotification([
                     'title' => 'Pengajuan anda telah ditolak',
                     'body' => 'Pengajuan anda telah ditolak, silahkan cek di aplikasi',
