@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\TaskTechnician;
 use App\Models\Technician;
+use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -14,6 +15,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class TaskController extends Controller
 {
+    protected $firebaseService;
+
+    public function __construct(FirebaseService $firebaseService)
+    {
+        $this->firebaseService = $firebaseService;
+    }
+    
     public function show($id)
     {
         $tasks = Task::with('technician')->find($id);
@@ -188,7 +196,14 @@ class TaskController extends Controller
                     'technician_id' => $value
                 ]);
             }
-
+            $this->firebaseService->setData('notifications', [
+                'title' => 'Pengajuan anda telah di approve',
+                'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
+                'data' => [
+                    'type' => 'task',
+                    'id' => $task->id
+                ]
+                ]);
             DB::commit();
             return redirect('tasks/pending')->with('success', 'Pengajuan berhasil di approve');
             // return redirect()->back()->with('success', 'Task berhasil di approve');
@@ -208,6 +223,7 @@ class TaskController extends Controller
             $task->finish_note = $request->finish_note;
             $task->save();
 
+            $this->firebaseService->notification($task->nik, 'Pengajuan anda telah di terima', 'Pengajuan anda telah diterima, silahkan cek di aplikasi');
 
             DB::commit();
             return redirect('tasks/progress')->with('success', 'Pengajuan berhasil di approve');
