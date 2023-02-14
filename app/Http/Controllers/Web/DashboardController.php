@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $progress = Task::where('status', 'progress')->count();
         $success = Task::where('status', 'success')->count();
         $pending = Task::where('status', 'pending')->count();
-        for($i = 1; $i <= 12; $i++){
+        for ($i = 1; $i <= 12; $i++) {
             $tasks[] = Task::whereMonth('updated_at', $i)->whereYear('updated_at', date('Y'))->where('status', 'success')->count();
         }
         $charts = [
@@ -21,7 +21,7 @@ class DashboardController extends Controller
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             'datasets' => [
                 [
-                    'label' => 'Task Completed',
+                    'label' => 'Pengajuan Selesai',
                     'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
                     'borderColor' => 'rgba(255, 99, 132, 1)',
                     'borderWidth' => 1,

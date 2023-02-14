@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <div class="page-content">
         <div class="container-fluid">
 
@@ -112,43 +112,43 @@
 
             <!-- end row -->
 
-   <!-- start page title -->
-   <div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0 font-size-18">Grafik Task</h4>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Grafik Pengajuan</h4>
 
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    {{-- <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li> --}}
-                </ol>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                {{-- <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li> --}}
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
-        </div>
-    </div>
-</div>
-<!-- end page title -->
+            <!-- end page title -->
             <!-- end row -->
             <div style="width:50%">
-            <div class="card">
-                <div class="card-body">
-                <canvas id="myChart"></canvas>
-              </div>
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div> <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
 
-    
-      <script>
+
+    <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
-          type: 'bar',
-          data: {!! json_encode($charts) !!},
-          options: {}
+            type: 'bar',
+            data: {!! json_encode($charts) !!},
+            options: {}
         });
-      </script>
+    </script>
 @endsection
 @section('js')
     <!-- apexcharts -->
