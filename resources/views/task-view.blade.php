@@ -82,13 +82,13 @@
                                         </div>
                                     </div>
                                     <!-- <div class="form-group row align-items-center mb-0">
-                                        <label for="inputEmail3"
-                                            class="col-2 text-end control-label col-form-label">Status</label>
-                                        <div class="col-9 border-start pb-2 pt-2">
-                                            <input type="text" name="title" class="form-control" id="inputEmail3"
-                                                value="{{ !empty($task) ? $task->status : '' }}" readonly>
-                                        </div>
-                                    </div> -->
+                                            <label for="inputEmail3"
+                                                class="col-2 text-end control-label col-form-label">Status</label>
+                                            <div class="col-9 border-start pb-2 pt-2">
+                                                <input type="text" name="title" class="form-control" id="inputEmail3"
+                                                    value="{{ !empty($task) ? $task->status : '' }}" readonly>
+                                            </div>
+                                        </div> -->
 
                                     <div class="form-group row align-items-center mb-0">
                                         <label for="inputEmail3"
@@ -130,8 +130,8 @@
                                                                     {{ $tech->technician?->name }}
                                                                 </td>
                                                                 <!-- <td>
-                                                
-                                                </td> -->
+                                                    
+                                                    </td> -->
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -216,7 +216,7 @@
                         <div class="form-group row align-items-center mb-0">
                             <label for="inputEmail3" class="col-2 text-end control-label col-form-label">Tgl Mulai</label>
                             <div class="col-9 border-start pb-2 pt-2">
-                                <input name="start_date" type="date" class="form-control">
+                                <input name="start_date" type="date" class="form-control" required>
                             </div>
                         </div>
                         <br>
@@ -224,7 +224,7 @@
                             <label for="inputEmail3" class="col-2 text-end control-label col-form-label">Tgl
                                 Selesai</label>
                             <div class="col-9 border-start pb-2 pt-2">
-                                <input name="end_date" type="date" class="form-control">
+                                <input name="end_date" type="date" class="form-control" required>
                             </div>
                         </div>
                         <hr>

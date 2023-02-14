@@ -217,7 +217,7 @@ class TaskController extends Controller
                     'id' => $id
                 ],
                 'created_at' => FieldValue::serverTimestamp(),
-                'to' => array($nik),
+                'to' => $nik,
                 'read_by' => array()
             ]);
 
@@ -258,7 +258,7 @@ class TaskController extends Controller
                     'id' => $id
                 ],
                 'created_at' => FieldValue::serverTimestamp(),
-                'to' => array($nik),
+                'to' => $nik,
                 'read_by' => array()
             ]);
 
@@ -299,7 +299,7 @@ class TaskController extends Controller
                     'id' => $id
                 ],
                 'created_at' => FieldValue::serverTimestamp(),
-                'to' => array($nik),
+                'to' => $nik,
                 'read_by' => array()
             ]);
 
