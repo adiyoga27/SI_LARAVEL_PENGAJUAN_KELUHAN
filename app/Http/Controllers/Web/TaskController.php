@@ -18,6 +18,7 @@ use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Log;
+use Google\Cloud\Firestore\FieldValue;
 
 class TaskController extends Controller
 {
@@ -214,7 +215,8 @@ class TaskController extends Controller
                 'data' => [
                     'type' => 'task',
                     'id' => $id
-                ]
+                ],
+                'created_at' => FieldValue::serverTimestamp(),
             ]);
 
             DB::commit();
@@ -252,7 +254,8 @@ class TaskController extends Controller
                 'data' => [
                     'type' => 'task',
                     'id' => $id
-                ]
+                ],
+                'created_at' => FieldValue::serverTimestamp(),
             ]);
 
             DB::commit();
@@ -290,7 +293,8 @@ class TaskController extends Controller
                 'data' => [
                     'type' => 'task',
                     'id' => $id
-                ]
+                ],
+                'created_at' => FieldValue::serverTimestamp(),
             ]);
 
             return response()->json([
