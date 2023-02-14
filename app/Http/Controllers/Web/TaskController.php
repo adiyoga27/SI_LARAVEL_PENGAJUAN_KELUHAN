@@ -209,8 +209,8 @@ class TaskController extends Controller
             $this->firebaseService->messaging()->send($message);
             // $messaging = app('firebase.messaging');
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
-                'title' => 'Pengajuan anda telah di approve',
-                'body' => 'Pengajuan anda telah di approve, silahkan cek di aplikasi',
+                'title' => 'Pengajuan di Terima',
+                'body' =>  'Perihal ' . $task->title,
                 'data' => [
                     'type' => 'task',
                     'id' => $id
@@ -247,8 +247,8 @@ class TaskController extends Controller
             $this->firebaseService->messaging()->send($message);
 
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
-                'title' => 'Pengajuan anda telah selesai',
-                'body' => 'Pengajuan yang anda ajukan telah selesai, silahkan cek di aplikasi',
+                'title' => 'Pengajuan telah selesai',
+                'body' => 'Perihal ' . $task->title,
                 'data' => [
                     'type' => 'task',
                     'id' => $id
@@ -285,8 +285,8 @@ class TaskController extends Controller
             $message = CloudMessage::withTarget('topic', $nik)->withNotification($notification);
             $this->firebaseService->messaging()->send($message);
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
-                'title' => 'Pengajuan anda ditolak',
-                'body' => 'Pengajuan yang anda ajukan ditolak, silahkan cek di aplikasi',
+                'title' => 'Pengajuan ditolak',
+                'body' =>  'Perihal ' . $task->title,
                 'data' => [
                     'type' => 'task',
                     'id' => $id
