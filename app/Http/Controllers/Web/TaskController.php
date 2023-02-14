@@ -27,7 +27,7 @@ class TaskController extends Controller
     {
         $this->firebaseService = Firebase::project('app');
     }
-    
+
     public function show($id)
     {
         $tasks = Task::with('technician')->find($id);
@@ -203,9 +203,9 @@ class TaskController extends Controller
                     'technician_id' => $value
                 ]);
             }
-            $notification = Notification::create('Pengajuan anda telah di approve', 'Pengajuan anda telah di approve, silahkan cek di aplikasi');
-            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
-         
+            $notification = Notification::create('Pengajuan di Terima', 'Perihal ' . $task->title);
+            $message = CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+
             $this->firebaseService->messaging()->send($message);
             // $messaging = app('firebase.messaging');
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
@@ -241,11 +241,11 @@ class TaskController extends Controller
             $task->finish_note = $request->finish_note;
             $task->save();
 
-           
-            $notification = Notification::create('Pengajuan anda telah selesai', 'Pengajuan anda telah selesai, silahkan cek di aplikasi',);
-            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+
+            $notification = Notification::create('Pengajuan telah selesai', 'Perihal ' . $task->title);
+            $message = CloudMessage::withTarget('topic', $nik)->withNotification($notification);
             $this->firebaseService->messaging()->send($message);
-         
+
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda telah selesai',
                 'body' => 'Pengajuan yang anda ajukan telah selesai, silahkan cek di aplikasi',
@@ -253,7 +253,7 @@ class TaskController extends Controller
                     'type' => 'task',
                     'id' => $id
                 ]
-                ]);
+            ]);
 
             DB::commit();
             return redirect('tasks/progress')->with('success', 'Pengajuan berhasil di approve');
@@ -279,10 +279,10 @@ class TaskController extends Controller
             $task->reject_note = $request->reject_note;
             $task->save();
             DB::commit();
-           
 
-            $notification = Notification::create('Pengajuan anda telah ditolak', 'Pengajuan anda telah ditolak, silahkan cek di aplikasi',);
-            $message =CloudMessage::withTarget('topic', $nik)->withNotification($notification);
+
+            $notification = Notification::create('Pengajuan ditolak', 'Perihal ' . $task->title);
+            $message = CloudMessage::withTarget('topic', $nik)->withNotification($notification);
             $this->firebaseService->messaging()->send($message);
             $this->firebaseService->firestore()->database()->collection('notifications')->newDocument()->set([
                 'title' => 'Pengajuan anda ditolak',
@@ -291,7 +291,7 @@ class TaskController extends Controller
                     'type' => 'task',
                     'id' => $id
                 ]
-                ]);
+            ]);
 
             return response()->json([
                 'status' => true,
