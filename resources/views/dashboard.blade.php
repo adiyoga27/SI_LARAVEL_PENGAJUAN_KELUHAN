@@ -132,7 +132,7 @@
             <div style="width:50%">
                 <div class="card">
                     <div class="card-body">
-                        <canvas id="myChart"></canvas>
+                        <canvas id="lineChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -142,12 +142,22 @@
 
 
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {!! json_encode($charts) !!},
-            options: {}
-        });
+        // var ctx = document.getElementById('myChart').getContext('2d');
+        // var chart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: {!! json_encode($charts) !!},
+        //     options: {}
+        // });
+
+       
+        var ctxL = document.getElementById("lineChart").getContext('2d');
+var myLineChart = new Chart(ctxL, {
+  type: 'line',
+  data: {!! json_encode($charts) !!},
+  options: {
+    responsive: true
+  }
+});
     </script>
 @endsection
 @section('js')
